@@ -1,0 +1,21 @@
+package com.projetominiERP.miniERP.models.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class UserUpdateDTO {
+
+    private Long id;
+
+    @NotBlank
+    @Size(min = 6, max = 60)
+    private String password;
+
+}
