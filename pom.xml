@@ -9,11 +9,11 @@
 		<version>2.7.3</version>
 		<relativePath />
 	</parent>
-	<groupId>com.lucasangelo</groupId>
-	<artifactId>todosimple</artifactId>
+	<groupId>com.guilhermeborges</groupId>
+	<artifactId>miniERP</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>todosimple</name>
-	<description>Spring Boot API for To Do App</description>
+	<description>Mini ERP</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
