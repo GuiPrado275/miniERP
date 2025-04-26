@@ -1,4 +1,4 @@
-package com.projetominiERP.miniERP.models.enuns;
+package com.projetominiERP.miniERP.models.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

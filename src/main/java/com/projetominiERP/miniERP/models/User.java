@@ -1,7 +1,7 @@
 package com.projetominiERP.miniERP.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.projetominiERP.miniERP.models.enuns.ProfileEnum;
+import com.projetominiERP.miniERP.models.enums.ProfileEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
