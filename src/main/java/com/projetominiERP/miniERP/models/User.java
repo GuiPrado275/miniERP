@@ -29,15 +29,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //id é aleatório
     private Long id;
 
+    @Email(message = "O e-mail deve ser válido!")
     @Column(name = "email", length = 50, nullable = false, unique = true)
-    @Size(min = 2, max = 50)
-    @NotBlank
+    @Size(min = 5, max = 50, message = "O e-mail deve ter entre 5 e 50 caracteres.")
+    @NotBlank(message = "O e-mail não pode estar vazio.")
     @Email(message = "O e-mail deve ser válido!")
     private String email;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //apenas para post put e delete, não pode get
-    @Column(name = "password", length = 60, nullable = false)
-    @Size(min = 6, max = 60)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "password", nullable = false)
+    @Size(min = 8, max = 60, message = "A senha deve ter entre 8 e 60 caracteres.")
+    @NotBlank(message = "A senha não pode estar vazia.")
     private String password;
 
     @Column(name = "profile", nullable = false)
