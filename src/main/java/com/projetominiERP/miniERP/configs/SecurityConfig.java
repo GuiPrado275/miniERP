@@ -86,5 +86,4 @@ public class SecurityConfig { //essa classe é o SecurityFilter
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
