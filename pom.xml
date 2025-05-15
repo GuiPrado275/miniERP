@@ -10,7 +10,7 @@
 		<relativePath />
 	</parent>
 	<groupId>com.guilhermeborges</groupId>
-	<artifactId>miniERP</artifactId>
+	<artifactId>mini-erp-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>todosimple</name>
 	<description>Mini ERP</description>

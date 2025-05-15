@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 //recebe o /login
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -47,7 +49,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
     }
 
-    @Override //se a autenticacao foi um sucessor, rodará isso
+    @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response, FilterChain chain,
                                             Authentication authentication) throws IOException, ServletException {
@@ -56,6 +58,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = jwtUtil.generateToken(email);
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("access-control-expose-headers", "Authorization");
-    } //isso é para retornar para o user o token para ele ser usado na "rota"
+        //isso é para retornar para o user o token para ele ser usado na "rota"
+        // Monta o JSON com token e dados do usuário
+        Map<String, Object> tokenResponse = new HashMap<>();
+        tokenResponse.put("token", token);
+        tokenResponse.put("user", userSpringSecurity);
+
+        response.setContentType("application/json");
+        new ObjectMapper().writeValue(response.getOutputStream(), tokenResponse);
+    }
 
 }
+

@@ -10,11 +10,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-    public void addCorsMappings(CorsRegistry registry){
-        registry.addMapping("/**") //qualquer requisição feita de (/**) será aceita
-                .allowedOrigins("*")
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:5173") // URL do seu frontend
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS");
-    } // liberar comunicação entre front-end e back-end
+                .allowCredentials(true);
+    }
 
 }
