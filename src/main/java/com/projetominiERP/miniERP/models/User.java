@@ -11,7 +11,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import javax.validation.constraints.Email;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,18 +31,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //id is randomly generated
     private Long id;
 
-    @Email(message = "O e-mail deve ser válido!")
+    @Email(message = "The email must be valid!")
     @Column(name = "email", length = 50, nullable = false, unique = true)
-    @Size(min = 5, max = 50, message = "O e-mail deve ter entre 5 e 50 caracteres.")
-    @NotBlank(message = "O e-mail não pode estar vazio.")
-    @Email(message = "O e-mail deve ser válido!")
+    @Size(min = 5, max = 50, message = "The email must be between 5 and 50 characters long.")
+    @NotBlank(message = "The email cannot be blank.")
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password", nullable = false)
-    @Size(min = 8, max = 60, message = "A senha deve ter entre 8 e 60 caracteres.")
-    @NotBlank(message = "A senha não pode estar vazia.")
+    @Size(min = 8, max = 60, message = "The password must be between 8 and 60 characters long.")
+    @NotBlank(message = "The password cannot be blank.")
     private String password;
+
+    @OneToMany(mappedBy = "user") // One user can have many tasks
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  //not return
+    private List<Trip> tasks = new ArrayList<Trip>(); //trip list
 
     @Column(name = "profile", nullable = false)
     @ElementCollection(fetch = FetchType.EAGER) //load roles
