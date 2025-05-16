@@ -18,21 +18,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-//recebe o /login
+//receives the login
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;
 
     private JWTUtil jwtUtil;
 
-    //construtor
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
         setAuthenticationFailureHandler(new GlobalExceptionHandler());
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
 
-    //tentativa para validacao do email e a senha
+    //try to authenticate the user
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
@@ -58,8 +57,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = jwtUtil.generateToken(email);
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("access-control-expose-headers", "Authorization");
-        //isso é para retornar para o user o token para ele ser usado na "rota"
-        // Monta o JSON com token e dados do usuário
+        //this is to return the token in the response
+        // build the json response
         Map<String, Object> tokenResponse = new HashMap<>();
         tokenResponse.put("token", token);
         tokenResponse.put("user", userSpringSecurity);

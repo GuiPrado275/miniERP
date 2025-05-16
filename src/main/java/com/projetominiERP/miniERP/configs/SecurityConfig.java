@@ -25,7 +25,7 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig { //essa classe é o SecurityFilter
+public class SecurityConfig {
 
     private AuthenticationManager authenticationManager;
 
@@ -35,11 +35,11 @@ public class SecurityConfig { //essa classe é o SecurityFilter
     @Autowired
     private JWTUtil jwtUtil;
 
-    private static final String[] PUBLIC_MATCHERS = { //rota livre
+    private static final String[] PUBLIC_MATCHERS = { //free rout
             "/",
     };
 
-    private static final String[] PUBLIC_MATCHERS_POST = { //user e login são publicos para post
+    private static final String[] PUBLIC_MATCHERS_POST = { //user and login are public to post
             "/user",
             "/login"
     };
@@ -73,7 +73,7 @@ public class SecurityConfig { //essa classe é o SecurityFilter
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));  // porta do seu frontend React
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));  // frontend react port
         configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));

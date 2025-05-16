@@ -9,7 +9,7 @@ import java.util.Objects;
 @Getter
 public enum ProfileEnum {
 
-    ADMIN(1,"ROLE_ADMIN"), //dois tipos de user
+    ADMIN(1,"ROLE_ADMIN"), //two roles, admin and user
     USER(2, "ROLE_USER");
 
     private Integer code;
@@ -17,16 +17,16 @@ public enum ProfileEnum {
 
     public static ProfileEnum toEnum(Integer code) {
 
-        if(Objects.isNull(code)){ //se é nulo, então é nulo
+        if(Objects.isNull(code)){ //if code is null, return null
             return null;
         }
-        for(ProfileEnum x : ProfileEnum.values()){ //para cada valor do enum, ele tem seu valor no x
-            if (code.equals(x.getCode())){ // se o code que foi passado está no x (1 ou 2) então retorne ele
+        for(ProfileEnum x : ProfileEnum.values()){ //for each enum value
+            if (code.equals(x.getCode())){
                 return x;
             }
         }
 
-        throw new IllegalArgumentException("Código inválido! " + code); //se não for nulo e não for 1 ou 2, é inválido
+        throw new IllegalArgumentException("Código inválido! " + code); //if code is not found, throw exception
 
     }
 

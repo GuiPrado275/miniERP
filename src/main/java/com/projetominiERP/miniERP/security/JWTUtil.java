@@ -19,21 +19,21 @@ public class JWTUtil {
     @Value("${jwt.expiration}") //do application properties
     private Long expiration;
 
-    public String generateToken(String email) { // token que no futuro será expirado
+    public String generateToken(String email) { // token that in future will be used to authenticate the user
         SecretKey key = getKeyBySecret();
         return Jwts.builder()
                 .setSubject(email)
-                .setExpiration(new Date(System.currentTimeMillis() + this.expiration)) //tempo de  expiração
+                .setExpiration(new Date(System.currentTimeMillis() + this.expiration))
                 .signWith(key)
                 .compact();
     }
 
-    private SecretKey getKeyBySecret(){ //chave de encriptação
+    private SecretKey getKeyBySecret(){ //encryption key
         SecretKey key = Keys.hmacShaKeyFor(this.secret.getBytes());
         return key;
     }
 
-    public boolean isValidToken(String token){ //verifica se o token é válido, se tem um email e se não está expirado
+    public boolean isValidToken(String token){ //to verify if the token is valid or expired
         Claims claims = getClaims(token);
         if (Objects.nonNull(claims)){
             String email = claims.getSubject();
@@ -45,19 +45,19 @@ public class JWTUtil {
         return false;
     }
 
-    public String getEmail(String token){ //pega o email do token
+    public String getEmail(String token){ //to get the email from the token
         Claims claims = getClaims(token);
         if (Objects.nonNull(claims))
             return claims.getSubject();
         return null;
     }
 
-    private Claims getClaims(String token){ //Para gerar claims - transformar token em datas, desencriptar
+    private Claims getClaims(String token){ //to generate claims from the token
         SecretKey key = getKeyBySecret();
         try {
             return Jwts.parserBuilder().setSigningKey(key). build().parseClaimsJws(token).getBody();
         } catch (Exception e){
-            return null; //se o objeto for nulo ou inválido, retorna isso
+            return null; //if the object is null or invalid, return this
         }
     }
 

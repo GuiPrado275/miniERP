@@ -11,8 +11,8 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@RequiredArgsConstructor //required = viriáveis finais
-@JsonInclude(JsonInclude.Include.NON_NULL) //nao inclui mensagens nulas no console
+@RequiredArgsConstructor //required = final variables
+@JsonInclude(JsonInclude.Include.NON_NULL) //dont include the null values
 public class ErrorResponse {
 
     private final int status;
@@ -30,12 +30,12 @@ public class ErrorResponse {
 
     public void addValidationError(String field, String message) {
         if (Objects.isNull(errors)) {
-            this.errors = new ArrayList<>(); // se o objeto nao é nulo, esse metodo passa o "field" e a
-        }                                    // "message" para o erro
+            this.errors = new ArrayList<>(); // if object is null, create a new list
+        }                                    // "message" to the error
         this.errors.add(new ValidationError(field, message));
     }
 
-    public String toJson() { // a mensagem do erro 402 (user write wrong the email or password)
+    public String toJson() { // mensage of erro 402 (user write wrong the email or password)
         return "{\"status\": " + getStatus() + ", " +
                 "\"message\": \"" + getMessage() + "\"}";
     }

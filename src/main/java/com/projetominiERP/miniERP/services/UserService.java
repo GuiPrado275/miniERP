@@ -30,41 +30,41 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User findById(Long id) { //buscar o usuário pelo id
-        UserSpringSecurity userSpringSecurity = authenticated(); //autenticar o usuário
+    public User findById(Long id) { //search user by id
+        UserSpringSecurity userSpringSecurity = authenticated(); //authenticate user
         if (!Objects.nonNull(userSpringSecurity)
         || !userSpringSecurity.hasRole(ProfileEnum.ADMIN) && !id.equals(userSpringSecurity.getId()))
-            throw new AuthorizationException("Access denied!"); //garantir quem vai acessar o id
-
-        Optional<User> user = this.userRepository.findById(id); //buscar o ID
+            throw new AuthorizationException("Access denied!"); //to ensure that the user is authenticated and
+                                                                //has the right to access the resource
+        Optional<User> user = this.userRepository.findById(id); //search user by id
         return user.orElseThrow(() -> new ObjectNotFoundException(
                 "User is not found! Id: " + id + ", Typo: " + User.class.getName()));
     }
 
     @Transactional
-    public User create (User obj) { //criar o usuário
+    public User create (User obj) { //create user
         obj.setId(null);
-        obj.setPassword(this.bCryptPasswordEncoder.encode(obj.getPassword())); //a senha é criptografada
-        obj.setProfiles(Stream.of(ProfileEnum.USER.getCode()).collect(Collectors.toSet()));  //o usuario criado é USER
-        obj = this.userRepository.save(obj); //salvar o usuário
+        obj.setPassword(this.bCryptPasswordEncoder.encode(obj.getPassword())); //the password is encrypted
+        obj.setProfiles(Stream.of(ProfileEnum.USER.getCode()).collect(Collectors.toSet()));  //the user created is USER
+        obj = this.userRepository.save(obj); //save the user
         return obj;
     }
 
     @Transactional
-    public User update(User obj) { //atualizar o usuário
-        User newObj = findById(obj.getId()); //garantir que o usuário existe
-        newObj.setPassword(obj.getPassword()); //atualizar a senha
-        newObj.setPassword(this.bCryptPasswordEncoder.encode(obj.getPassword())); //criptografar a senha
-        return this.userRepository.save(newObj); //salvar o usuário atualizado
+    public User update(User obj) { //update user
+        User newObj = findById(obj.getId()); //to ensure that the user exist
+        newObj.setPassword(obj.getPassword()); //update pawssword
+        newObj.setPassword(this.bCryptPasswordEncoder.encode(obj.getPassword())); //to encrypt the password
+        return this.userRepository.save(newObj); //save the user updated
     }
 
-    public void delete(Long id) { //deletar o usuário
-        findById(id); //buscar o ID
+    public void delete(Long id) { //to delete the user
+        findById(id); //search user by id
         try {
-            this.userRepository.deleteById(id); //deletar o ID
-        } catch (Exception e) { //se tiver enitdades relacionadas, não deletar
+            this.userRepository.deleteById(id); //to delete id
+        } catch (Exception e) { //if it dont has relationship with other entities
             throw new DataBindingViolationException("Cannot delete because this user has an entities relationship!");
-            //se não conseguir deletar, retorna erro
+            //error to delete the user
         }
     }
 

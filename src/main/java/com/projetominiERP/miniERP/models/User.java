@@ -26,7 +26,7 @@ public class User {
 
     @Id
     @Column(name = "id", unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //id é aleatório
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //id is randomly generated
     private Long id;
 
     @Email(message = "O e-mail deve ser válido!")
@@ -43,26 +43,27 @@ public class User {
     private String password;
 
     @Column(name = "profile", nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER) //carregar as roles
+    @ElementCollection(fetch = FetchType.EAGER) //load roles
     @CollectionTable(name = "user_profile")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<Integer> profiles = new HashSet<>(); //lista de valores unicos
+    private Set<Integer> profiles = new HashSet<>(); //list of unique values
 
     public Set<ProfileEnum> getProfiles() {
         return this.profiles.stream().map(x -> ProfileEnum.toEnum(x)).collect(Collectors.toSet());
-        //transofrma o Set<interger> em uma stream manipulável
-        //.map() aplica a função pra cada item (x)
-        //(x -> Profil...) é a função que transforma o valor x (código numérico) em um valor da enum ProfileEnum
-        //Exemplo: Se x for 1, a função vai chamar ProfileEnum.toEnum(1), que retorna ProfileEnum.ADMIN
-        //collect() é uma operação terminal que transforma a Stream de volta em uma coleção.
-        //Collectors.toSet() coleta os resultados da stream em um Set, ou seja,
-        //um conjunto que não permite duplicação de elementos.
+        // Transforms the Set<Integer> into a manipulable stream
+        // .map() applies the function to each item (x)
+        // (x -> ProfileEnum.toEnum(x)) is the function that transforms the value x (a numeric code) into a ProfileEnum value
+        // Example: If x is 1, the function will call ProfileEnum.toEnum(1), which returns ProfileEnum.ADMIN
+        // collect() is a terminal operation that converts the Stream back into a collection
+        // Collectors.toSet() gathers the results of the stream into a Set, i.e.,
+        // a collection that does not allow duplicate elements
+
     }
 
     public void AddProfile(ProfileEnum profileEnum) {
         this.profiles.add(profileEnum.getCode());
     }
-    //Ou seja, o código 1 ou 2 (dependendo de qual valor de ProfileEnum foi passado)
-    //será adicionado ao conjunto profiles Set<Interger>, permitindo que o usuário tenha uma role
-    //Basicamente adciona um perfil ao usuário e salva
+    // In other words, the code 1 or 2 (depending on which ProfileEnum value was passed)
+    // will be added to the profiles Set<Integer>, allowing the user to have a role
+    // Basically, it adds a profile to the user and saves it
 }

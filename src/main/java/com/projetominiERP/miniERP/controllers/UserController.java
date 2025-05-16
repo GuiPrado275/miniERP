@@ -62,11 +62,11 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<User> getCurrentUser(Authentication authentication) {
         if(authentication == null) {
-            return ResponseEntity.status(401).build(); // não autenticado
+            return ResponseEntity.status(401).build(); // dont authenticated
         }
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String email = userDetails.getUsername(); // supondo que o username seja o email
+        String email = userDetails.getUsername(); // username is the email
 
         User user = userRepository.findByEmail(email);
         if (user == null) {
