@@ -32,37 +32,37 @@ public class Trip {
     @NotBlank(message = "Status can't be null.")
     private boolean finished;
 
-    @Column(name = "start_date", length = 20, nullable = false)
+    @Column(name = "start_date",nullable = false)
     @NotNull(message = "Start date is required.")
     private Date startDate;
 
-    @Column(name = "end_date", length = 20, nullable = false)
+    @Column(name = "end_date", nullable = false)
     @NotNull(message = "End date is required.")
     private Date endDate;
 
-    @Column(name = "origin", length = 20, nullable = false)
-    @Size(min = 1, max = 20, message = "Origin must be between 1 and 20 characters.")
+    @Column(name = "origin", length = 50, nullable = false)
+    @Size(min = 1, max = 50, message = "Origin must be between 1 and 20 characters.")
     @NotBlank(message = "Origin cannot be blank.")
     private String origin;
 
-    @Column(name = "destination", length = 20, nullable = false)
-    @Size(min = 1, max = 20, message = "Destination must be between 1 and 20 characters.")
+    @Column(name = "destination", length = 50, nullable = false)
+    @Size(min = 1, max = 50, message = "Destination must be between 1 and 20 characters.")
     @NotBlank(message = "Destination cannot be blank.")
     private String destination;
 
-    @Column(name = "km_value", length = 20, nullable = false)
+    @Column(name = "km_value", nullable = false)
     @NotNull(message = "KM value is required.")
     private Double kmValue;
 
-    @Column(name = "km", length = 20, nullable = false)
+    @Column(name = "km", nullable = false)
     @NotNull(message = "KM is required.")
     private Double km;
 
-    @Column(name = "travel_time", length = 20, nullable = false)
+    @Column(name = "travel_time", nullable = false)
     @NotNull(message = "Travel time is required.")
     private Double travelTime;
 
-    @Column(name = "travel_cost", length = 20, nullable = false)
+    @Column(name = "travel_cost", nullable = false)
     @NotNull(message = "Travel cost is required.")
     private Double travelCost;
 
