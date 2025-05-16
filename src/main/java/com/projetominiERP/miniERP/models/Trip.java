@@ -50,10 +50,6 @@ public class Trip {
     @NotBlank(message = "Destination cannot be blank.")
     private String destination;
 
-    @Column(name = "km_value", nullable = false)
-    @NotNull(message = "KM value is required.")
-    private Double kmValue;
-
     @Column(name = "km", nullable = false)
     @NotNull(message = "KM is required.")
     private Double km;
@@ -65,5 +61,8 @@ public class Trip {
     @Column(name = "travel_cost", nullable = false)
     @NotNull(message = "Travel cost is required.")
     private Double travelCost;
+
+    @Column(name = "km_value($/km)", nullable = false)
+    private Double kmValue = km/travelCost;
 
 }
