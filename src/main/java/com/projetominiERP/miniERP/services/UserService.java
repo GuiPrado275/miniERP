@@ -62,7 +62,7 @@ public class UserService {
         findById(id); //search user by id
         try {
             this.userRepository.deleteById(id); //to delete id
-        } catch (Exception e) { //if it dont has relationship with other entities
+        } catch (Exception e) { //if it don't has a relationship with other entities
             throw new DataBindingViolationException("Cannot delete because this user has an entities relationship!");
             //error to delete the user
         }
