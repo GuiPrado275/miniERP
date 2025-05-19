@@ -35,7 +35,6 @@ public class UserSpringSecurity implements UserDetails {
     public String getUsername() {
         return email;
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
