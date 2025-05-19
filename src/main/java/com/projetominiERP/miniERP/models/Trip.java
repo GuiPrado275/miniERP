@@ -28,6 +28,11 @@ public class Trip {
     @JoinColumn(name = "user_id", nullable = false, updatable = false) //this is for make reference of "user_id"
     private User user;
 
+    @Column(name = "description", length = 255)
+    @Size(min = 1, max = 255, message = "Description must be between 1 and 255 characters.")
+    @NotBlank(message = "Description cannot be blank.")
+    private String description;
+
     @Column(name = "status", nullable = false)
     @NotBlank(message = "Status can't be null.")
     private boolean finished;
@@ -63,6 +68,6 @@ public class Trip {
     private Double travelCost;
 
     @Column(name = "km_value($/km)", nullable = false)
-    private Double kmValue = km/travelCost;
+    private Double kmValue = km / travelCost;
 
 }

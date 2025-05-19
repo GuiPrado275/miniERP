@@ -6,6 +6,8 @@ public interface TripProjection {
 
     public Long getId();
 
+    public String getDescription();
+
     public boolean getFinished();
 
     public Date getStartDate();
