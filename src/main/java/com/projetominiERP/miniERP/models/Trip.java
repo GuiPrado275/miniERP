@@ -1,5 +1,6 @@
 package com.projetominiERP.miniERP.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,7 +35,6 @@ public class Trip {
     private String description;
 
     @Column(name = "status", nullable = false)
-    @NotBlank(message = "Status can't be null.")
     private boolean finished;
 
     @Column(name = "start_date",nullable = false)
@@ -67,7 +67,13 @@ public class Trip {
     @NotNull(message = "Travel cost is required.")
     private Double travelCost;
 
-    @Column(name = "km_value($/km)", nullable = false)
-    private Double kmValue = km / travelCost;
+    @Transient
+    @JsonProperty
+    public Double getKmValue() {
+        if (km != null && travelCost != null && travelCost != 0) {
+            return km / travelCost;
+        }
+        return null;
+    }
 
 }

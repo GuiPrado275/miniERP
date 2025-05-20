@@ -4,25 +4,32 @@ import java.util.Date;
 
 public interface TripProjection {
 
-    public Long getId();
+    Long getId();
 
-    public String getDescription();
+    String getDescription();
 
-    public boolean getFinished();
+    Boolean getFinished();
 
-    public Date getStartDate();
+    Date getStartDate();
 
-    public Date getEndDate();
+    Date getEndDate();
 
-    public String getOrigin();
+    String getOrigin();
 
-    public String getDestination();
+    String getDestination();
 
-    public Double getKmValue();
+    Double getKm();
 
-    public Double getKm();
+    Integer getTravelTime();
 
-    public Double getTravelTime();
+    Double getTravelCost();
 
-    public Double getTravelCost();
+    //to calculate the cost of travel
+    default Double getKmValue() {
+        Double travelCost = getTravelCost();
+        Double km = getKm();
+        return (travelCost != null && travelCost != 0 && km != null)
+                ? km / travelCost
+                : null;
+    }
 }
