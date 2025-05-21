@@ -1,18 +1,38 @@
 package com.projetominiERP.miniERP.models.projection;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+@JsonPropertyOrder({
+        "id",
+        "user_id",
+        "description",
+        "origin",
+        "destination",
+        "startDate",
+        "endDate",
+        "finished",
+        "travelTime",
+        "km",
+        "travelCost"
+})
 public interface TripProjection {
 
     Long getId();
+
+    @JsonProperty("user_id")
+    Long getUserId();
 
     String getDescription();
 
     Boolean getFinished();
 
-    Date getStartDate();
+    LocalDate getStartDate();
 
-    Date getEndDate();
+    LocalDate getEndDate();
 
     String getOrigin();
 
@@ -20,7 +40,7 @@ public interface TripProjection {
 
     Double getKm();
 
-    Integer getTravelTime();
+    LocalTime getTravelTime();
 
     Double getTravelCost();
 

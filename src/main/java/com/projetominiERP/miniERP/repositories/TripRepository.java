@@ -12,16 +12,24 @@ import java.util.List;
 @Repository
 public interface TripRepository extends JpaRepository<Trip, Long> {
 
-    @Query("SELECT t.id AS id, " +
-            "t.description AS description, " +
-            "t.finished AS finished, " +
-            "t.startDate AS startDate, " +
-            "t.endDate AS endDate, " +
-            "t.origin AS origin, " +
-            "t.destination AS destination, " +
-            "t.km AS km, " +
-            "t.travelTime AS travelTime, " +
-            "t.travelCost AS travelCost " +
-            "FROM Trip t WHERE t.user.id = :id")
-    List<TripProjection> findByUser_id(@Param("id") Long id);
+    @Query("""
+    SELECT 
+        t.id AS id,
+        t.user.id AS userId,
+        t.description AS description,
+        t.origin AS origin,
+        t.destination AS destination,
+        t.startDate AS startDate,
+        t.endDate AS endDate,
+        t.finished AS finished,
+        t.travelTime AS travelTime,
+        t.km AS km,
+        t.travelCost AS travelCost
+    FROM Trip t
+    WHERE 
+        (:isAdmin = false AND t.user.id = :userId) OR 
+        (:isAdmin = true AND t.user.id = :userId)      
+""")
+    List<TripProjection> findByUser_id(@Param("userId") Long userId,
+                                       @Param("isAdmin") boolean isAdmin);
 }
