@@ -37,12 +37,28 @@ public class TripService {
         return trip;
     }
 
-    public List<TripProjection> findAllByUser() {
+    public List<TripProjection> findAllByUser(Long userId) {
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        if (Objects.isNull(userSpringSecurity))
+        if (userSpringSecurity == null) {
             throw new AuthorizationException("Access denied");
-        List<TripProjection> trips = this.tripRepository.findByUser_id(userSpringSecurity.getId());
-        return trips;
+        }
+
+        boolean isAdmin = userSpringSecurity.hasRole(ProfileEnum.ADMIN);
+
+        // a user only can find your taks
+        if (!isAdmin) {
+            if (userId != null && !userId.equals(userSpringSecurity.getId())) {
+                throw new AuthorizationException("You can only view your own trips");
+            }
+            userId = userSpringSecurity.getId(); //force fetch own id
+        }
+
+        //admin must pass a valid user
+        if (isAdmin && userId == null) {
+            throw new IllegalArgumentException("User ID is mandatory for admin");
+        }
+
+        return tripRepository.findByUser_id(userId, isAdmin);
     }
 
     @Transactional //util for inputs in databases, in create or modification of database

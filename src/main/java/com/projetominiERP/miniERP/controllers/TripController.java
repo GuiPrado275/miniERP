@@ -2,7 +2,9 @@ package com.projetominiERP.miniERP.controllers;
 
 import com.projetominiERP.miniERP.models.Trip;
 import com.projetominiERP.miniERP.models.projection.TripProjection;
+import com.projetominiERP.miniERP.security.UserSpringSecurity;
 import com.projetominiERP.miniERP.services.TripService;
+import com.projetominiERP.miniERP.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,10 +29,19 @@ public class TripController {
         return ResponseEntity.ok().body(obj); //.ok() - If there is no error, continue
     }                                         //.body() - Is the "body" of response, local of data
 
-    @GetMapping("/user")
-    public ResponseEntity<List<TripProjection>> findAllByUser(){ //search all trips by userId
-        List<TripProjection> objs = this.tripService.findAllByUser(); //tasks list to be returned
-        return ResponseEntity.ok().body(objs);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<TripProjection>> getTripsByUser(
+            @PathVariable Long userId) {
+
+        List<TripProjection> trips = tripService.findAllByUser(userId);
+        return ResponseEntity.ok(trips);
+    }
+
+    //a normal user
+    @GetMapping("/user/me")
+    public ResponseEntity<List<TripProjection>> getMyTrips() {
+        UserSpringSecurity user = UserService.authenticated();
+        return getTripsByUser(user.getId());
     }
 
     @PostMapping
