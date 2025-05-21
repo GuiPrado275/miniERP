@@ -9,7 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = Trip.TABLE_NAME) //table for database
@@ -34,16 +35,16 @@ public class Trip {
     @NotBlank(message = "Description cannot be blank.")
     private String description;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "finished", nullable = false)
     private boolean finished;
 
     @Column(name = "start_date",nullable = false)
     @NotNull(message = "Start date is required.")
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date", nullable = false)
     @NotNull(message = "End date is required.")
-    private Date endDate;
+    private LocalDate endDate;
 
     @Column(name = "origin", length = 50, nullable = false)
     @Size(min = 1, max = 50, message = "Origin must be between 1 and 20 characters.")
@@ -61,7 +62,7 @@ public class Trip {
 
     @Column(name = "travel_time", nullable = false)
     @NotNull(message = "Travel time is required.")
-    private Double travelTime;
+    private LocalTime travelTime;
 
     @Column(name = "travel_cost", nullable = false)
     @NotNull(message = "Travel cost is required.")
